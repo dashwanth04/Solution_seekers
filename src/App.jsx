@@ -40,6 +40,8 @@ const translations = {
     getAdvisory: "Get Advisory",
     detailedAdvisory: "Detailed Advisory",
     noAdvisory: "No detailed advisory yet — click Get Advisory.",
+    tollFree: "📞 Toll-free helpline: 1800-180-1551",
+    rainfall: "🌧 Rainfall",
     fertilizerAdvice: {
       'Red Soil': "Use NPK 6:6:6 and organic compost to improve fertility.",
       'Black Soil': "Apply Nitrogen and Phosphorus; avoid waterlogging.",
@@ -64,6 +66,8 @@ const translations = {
     getAdvisory: "సలహా పొందండి",
     detailedAdvisory: "వివరణాత్మక సలహా",
     noAdvisory: "ఇప్పటివరకు సలహా లేదు — సలహా పొందండి.",
+    tollFree: "📞 టోల్-ఫ్రీ సహాయం: 1800-180-1551",
+    rainfall: "🌧 వర్షపాతం",
     fertilizerAdvice: {
       'ఎర్ర మట్టి': "ఎన్పీకే 6:6:6 మరియు సేంద్రీయ ఎరువులు వాడండి.",
       'నల్ల మట్టి': "నత్రజని, ఫాస్ఫరస్ వేసుకోండి; నీరు నిల్వ కాకుండా చూసుకోండి.",
@@ -88,6 +92,8 @@ const translations = {
     getAdvisory: "सलाह प्राप्त करें",
     detailedAdvisory: "विस्तृत सलाह",
     noAdvisory: "अभी कोई सलाह नहीं है — क्लिक करें।",
+    tollFree: "📞 टोल-फ्री सहायता: 1800-180-1551",
+    rainfall: "🌧 वर्षा",
     fertilizerAdvice: {
       'लाल मिट्टी': "एनपीके 6:6:6 और जैविक खाद का प्रयोग करें।",
       'काली मिट्टी': "नाइट्रोजन और फॉस्फोरस डालें; जलभराव से बचें।",
@@ -99,11 +105,12 @@ const translations = {
   }
 };
 
-// Mock weather
+// Mock weather (added rainfall)
 function mockWeather(location) {
   const temp = 24 + (location ? location.length % 10 : 6);
   const condition = (location && location.toLowerCase().includes('ananta')) ? 'Rain' : (temp > 28 ? 'Sunny' : 'Cloudy');
-  return { temp, condition };
+  const rainfall = Math.floor(Math.random() * 100); // mm rainfall
+  return { temp, condition, rainfall };
 }
 
 // Mock market price
@@ -114,7 +121,7 @@ function mockMarketPrice(crop, market){
 }
 
 // Advisory Generator
-function generateAdvisory({ soilType, crop, market, infectionResult }, t){
+function generateAdvisory({ soilType, crop, market, infectionResult, weather }, t){
   const adv = [];
   if (soilType) {
     adv.push(`${t.soilType}: ${soilType}`);
@@ -125,6 +132,9 @@ function generateAdvisory({ soilType, crop, market, infectionResult }, t){
   if (crop) adv.push(`${t.crop}: ${crop}`);
   if (market) adv.push(`${t.market}: ${market}`);
   if (infectionResult) adv.push(`🩺 ${infectionResult}`);
+  if (weather) adv.push(`${t.rainfall}: ${weather.rainfall} mm`);
+  adv.push(t.tollFree);
+
   if (adv.length === 0) adv.push(t.noAdvisory);
   return adv;
 }
@@ -163,7 +173,7 @@ export default function SmartCropWebsite(){
 
   function handleGetAdvisory(e){
     e.preventDefault();
-    setAdvisory(generateAdvisory({ soilType, crop, market, infectionResult }, t));
+    setAdvisory(generateAdvisory({ soilType, crop, market, infectionResult, weather }, t));
   }
 
   // Mock infection detection
