@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
+// Soil Types
 const soilTypes = {
   English: ['Red Soil','Black Soil','Alluvial','Laterite','Loamy','Sandy'],
   'తెలుగు (Telugu)': ['ఎర్ర మట్టి','నల్ల మట్టి','ఆల్యూవియల్','లేటరైట్','లోమీ','ఇసుక'],
   'हिन्दी (Hindi)': ['लाल मिट्टी','काली मिट्टी','जलोढ़','लेटेराइट','दोमट','बालू']
 };
 
+// Crops
 const crops = {
   English: ['Groundnut','Wheat','Rice','Maize','Cotton','Soybean'],
   'తెలుగు (Telugu)': ['పల్లీలు','గోధుమలు','బియ్యం','మొక్కజొన్న','పత్తి','సోయాబీన్'],
   'हिन्दी (Hindi)': ['मूंगफली','गेहूं','चावल','मक्का','कपास','सोयाबीन']
 };
 
+// Market Areas
 const marketAreas = {
   English: ['Anantapur','Kurnool','Hyderabad','Bengaluru','Tirupati'],
   'తెలుగు (Telugu)': ['అనంతపూర్','కర్నూలు','హైదరాబాద్','బెంగళూరు','తిరుపతి'],
@@ -20,6 +23,7 @@ const marketAreas = {
 
 const languages = ['English','తెలుగు (Telugu)','हिन्दी (Hindi)'];
 
+// Translations
 const translations = {
   English: {
     title: "SMART CROP",
@@ -32,6 +36,7 @@ const translations = {
     crop: "Current Crop",
     market: "Market Area",
     marketPrice: "Market Price",
+    infection: "Crop Infection Detection",
     getAdvisory: "Get Advisory",
     detailedAdvisory: "Detailed Advisory",
     noAdvisory: "No detailed advisory yet — click Get Advisory.",
@@ -46,25 +51,26 @@ const translations = {
   },
   'తెలుగు (Telugu)': {
     title: "స్మార్ట్ క్రాప్",
-    subtitle: "రైతులకు సలహా వ్యవస్థ",
+    subtitle: "రైతుల కోసం సలహా వ్యవస్థ",
     language: "భాష",
-    soilType: "భూసారం రకం",
-    soilHealth: "భూసారం ఆరోగ్యం",
-    soilHealthText: "భూమి పరీక్ష చేయడం సిఫార్సు. మెరుగైన ఫలితాల కోసం సేంద్రియ పదార్థాన్ని నిలుపుకోండి.",
+    soilType: "మట్టి రకం",
+    soilHealth: "మట్టి ఆరోగ్యం",
+    soilHealthText: "మట్టి పరీక్ష చేయించుకోవాలి. సేంద్రీయ పదార్థాన్ని ఉంచండి.",
     location: "ప్రాంతం",
-    crop: "ప్రస్తుత పంట",
+    crop: "ప్రస్తుతం పంట",
     market: "మార్కెట్ ప్రాంతం",
     marketPrice: "మార్కెట్ ధర",
+    infection: "పంట ఇన్ఫెక్షన్ గుర్తింపు",
     getAdvisory: "సలహా పొందండి",
-    detailedAdvisory: "వివరమైన సలహా",
-    noAdvisory: "ఇప్పటివరకు ఎటువంటి సలహా లేదు — సలహా పొందండి బటన్ నొక్కండి.",
+    detailedAdvisory: "వివరణాత్మక సలహా",
+    noAdvisory: "ఇప్పటివరకు సలహా లేదు — సలహా పొందండి.",
     fertilizerAdvice: {
-      'ఎర్ర మట్టి': "ఎన్‌పీకే 6:6:6 మరియు సేంద్రీయ కంపోస్ట్ ఉపయోగించండి.",
-      'నల్ల మట్టి': "నైట్రోజన్ మరియు ఫాస్పరస్ వాడండి; నీరు నిల్వ కాకుండా జాగ్రత్తపడండి.",
-      'ఆల్యూవియల్': "సమతుల్య ఎన్‌పీకే మిశ్రమం బాగా పనిచేస్తుంది; పొటాష్‌పై దృష్టి పెట్టండి.",
-      'లేటరైట్': "అమ్లత్వం తగ్గించడానికి లైమ్ మరియు సేంద్రీయ ఎరువులు జోడించండి.",
-      'లోమీ': "సేంద్రియ ఎరువులు మరియు మైక్రోన్యూట్రియెంట్లతో నిర్వహించండి.",
-      'ఇసుక': "తరచుగా నైట్రోజన్ మరియు కంపోస్ట్ మోతాదులు అవసరం."
+      'ఎర్ర మట్టి': "ఎన్పీకే 6:6:6 మరియు సేంద్రీయ ఎరువులు వాడండి.",
+      'నల్ల మట్టి': "నత్రజని, ఫాస్ఫరస్ వేసుకోండి; నీరు నిల్వ కాకుండా చూసుకోండి.",
+      'ఆల్యూవియల్': "సమతుల్య ఎరువులు వాడండి; పొటాష్ పై దృష్టి పెట్టండి.",
+      'లేటరైట్': "లైమ్ మరియు సేంద్రీయ ఎరువులు వేసుకోండి.",
+      'లోమీ': "సేంద్రీయ ఎరువులు మరియు సూక్ష్మ పోషకాలు వాడండి.",
+      'ఇసుక': "తరచుగా నత్రజని మరియు సేంద్రీయ ఎరువులు వేసుకోవాలి."
     }
   },
   'हिन्दी (Hindi)': {
@@ -73,50 +79,57 @@ const translations = {
     language: "भाषा",
     soilType: "मिट्टी का प्रकार",
     soilHealth: "मिट्टी की सेहत",
-    soilHealthText: "मिट्टी की जांच की सलाह दी जाती है। बेहतर उपज के लिए जैविक पदार्थ बनाए रखें।",
+    soilHealthText: "मिट्टी की जांच करवाएं। कार्बनिक पदार्थ बनाए रखें।",
     location: "स्थान",
     crop: "वर्तमान फसल",
-    market: "बाजार क्षेत्र",
-    marketPrice: "बाजार मूल्य",
+    market: "बाज़ार क्षेत्र",
+    marketPrice: "बाज़ार मूल्य",
+    infection: "फसल संक्रमण पहचान",
     getAdvisory: "सलाह प्राप्त करें",
     detailedAdvisory: "विस्तृत सलाह",
-    noAdvisory: "अभी तक कोई विस्तृत सलाह नहीं — सलाह प्राप्त करें बटन दबाएँ।",
+    noAdvisory: "अभी कोई सलाह नहीं है — क्लिक करें।",
     fertilizerAdvice: {
-      'लाल मिट्टी': "एनपीके 6:6:6 और जैविक खाद का उपयोग करें।",
+      'लाल मिट्टी': "एनपीके 6:6:6 और जैविक खाद का प्रयोग करें।",
       'काली मिट्टी': "नाइट्रोजन और फॉस्फोरस डालें; जलभराव से बचें।",
-      'जलोढ़': "संतुलित एनपीके मिश्रण अच्छा काम करता है; पोटाश पर ध्यान दें।",
-      'लेटेराइट': "अम्लता को संतुलित करने के लिए चूना और जैविक खाद डालें।",
-      'दोमट': "जैविक खाद और सूक्ष्म पोषक तत्वों के साथ बनाए रखें।",
-      'बालू': "नाइट्रोजन और खाद की बार-बार खुराक की आवश्यकता है।"
+      'जलोढ़': "संतुलित एनपीके का प्रयोग करें; पोटाश पर ध्यान दें।",
+      'लेटेराइट': "चूना और जैविक खाद डालें।",
+      'दोमट': "जैविक खाद और सूक्ष्म पोषक डालें।",
+      'बालू': "बार-बार नाइट्रोजन और जैविक खाद डालें।"
     }
   }
 };
 
+// Mock weather
 function mockWeather(location) {
   const temp = 24 + (location ? location.length % 10 : 6);
   const condition = (location && location.toLowerCase().includes('ananta')) ? 'Rain' : (temp > 28 ? 'Sunny' : 'Cloudy');
   return { temp, condition };
 }
 
+// Mock market price
 function mockMarketPrice(crop, market){
   const base = crop.length * 100;
   const fluctuation = Math.floor(Math.random()*50);
   return base + fluctuation;
 }
 
-function generateAdvisory({ soilType, crop, market }, t){
+// Advisory Generator
+function generateAdvisory({ soilType, crop, market, infectionResult }, t){
   const adv = [];
-  if (!soilType) adv.push(t.soilType + ': ' + t.noAdvisory);
-  if (soilType) adv.push(`${t.soilHealth}: ${soilType}.`);
-  if (soilType && t.fertilizerAdvice && t.fertilizerAdvice[soilType]) {
-    adv.push(t.fertilizerAdvice[soilType]);
+  if (soilType) {
+    adv.push(`${t.soilType}: ${soilType}`);
+    if (t.fertilizerAdvice && t.fertilizerAdvice[soilType]) {
+      adv.push(t.fertilizerAdvice[soilType]);
+    }
   }
-  if (crop) adv.push(`${crop} ${t.crop} ✔`);
+  if (crop) adv.push(`${t.crop}: ${crop}`);
   if (market) adv.push(`${t.market}: ${market}`);
+  if (infectionResult) adv.push(`🩺 ${infectionResult}`);
   if (adv.length === 0) adv.push(t.noAdvisory);
   return adv;
 }
 
+// 🔹 MAIN COMPONENT
 export default function SmartCropWebsite(){
   const [language, setLanguage] = useState('English');
   const [soilType, setSoilType] = useState(soilTypes[language][0]);
@@ -127,13 +140,22 @@ export default function SmartCropWebsite(){
   const [advisory, setAdvisory] = useState([]);
   const [marketPrice, setMarketPrice] = useState(mockMarketPrice(crops[language][0],marketAreas[language][0]));
 
+  // Infection detection states
+  const [cropImage, setCropImage] = useState(null);
+  const [infectionResult, setInfectionResult] = useState("");
+
   const t = translations[language];
 
+  // 🔹 Reset values when language changes
   useEffect(()=>{
-    setSoilType(soilTypes[language][0]);
-    setCrop(crops[language][0]);
-    setMarket(marketAreas[language][0]);
-    setLocation(marketAreas[language][0]);
+    const newSoil = soilTypes[language][0];
+    const newCrop = crops[language][0];
+    const newMarket = marketAreas[language][0];
+    setSoilType(newSoil);
+    setCrop(newCrop);
+    setMarket(newMarket);
+    setLocation(newMarket);
+    setAdvisory([]);
   },[language]);
 
   useEffect(()=>{ setWeather(mockWeather(location)); }, [location]);
@@ -141,28 +163,34 @@ export default function SmartCropWebsite(){
 
   function handleGetAdvisory(e){
     e.preventDefault();
-    setAdvisory(generateAdvisory({ soilType, crop, market }, t));
+    setAdvisory(generateAdvisory({ soilType, crop, market, infectionResult }, t));
   }
 
-  function speakAdvisory(){
-    if (!('speechSynthesis' in window)) { alert('Voice support not available'); return; }
-    const utter = new SpeechSynthesisUtterance(advisory.join('. '));
-    utter.lang = language.includes('Telugu') ? 'te-IN' : language.includes('Hindi') ? 'hi-IN' : 'en-IN';
-    window.speechSynthesis.speak(utter);
+  // Mock infection detection
+  function detectInfection(){
+    const results = [
+      "Healthy crop ✅",
+      "Possible fungal infection 🍄 – Use fungicide.",
+      "Possible bacterial infection 🦠 – Maintain soil hygiene.",
+      "Pest detected 🐛 – Use organic pesticide.",
+      "Nutrient deficiency – Add micronutrients."
+    ];
+    return results[Math.floor(Math.random()*results.length)];
   }
 
-  function startVoiceInput(fieldSetter){
-    if (!('webkitSpeechRecognition' in window)) { alert('Voice input not supported'); return; }
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = language.includes('Telugu') ? 'te-IN' : language.includes('Hindi') ? 'hi-IN' : 'en-IN';
-    recognition.start();
-    recognition.onresult = (event)=>{ fieldSetter(event.results[0][0].transcript); };
+  function handleImageUpload(e){
+    const file = e.target.files[0];
+    if (file){
+      setCropImage(URL.createObjectURL(file));
+      setInfectionResult(detectInfection());
+    }
   }
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
-      <div className="w-full max-w-3xl bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden">
+      <div className="w-full max-w-4xl bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden">
         <div className="p-6 flex flex-col md:flex-row gap-6">
+          {/* LEFT FORM */}
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-center md:text-left">{t.title}</h1>
             <p className="text-sm text-center md:text-left mb-4">{t.subtitle}</p>
@@ -193,42 +221,30 @@ export default function SmartCropWebsite(){
               {/* Location */}
               <div>
                 <label className="block text-sm font-medium">{t.location}</label>
-                <div className="flex gap-2 mt-1">
-                  <input value={location} onChange={e=>setLocation(e.target.value)} className="flex-1 border rounded-xl px-3 py-2" placeholder={t.location} />
-                  <button type="button" onClick={()=>startVoiceInput(setLocation)} className="px-3 py-2 border rounded-xl">🎤</button>
-                </div>
+                <input value={location} onChange={e=>setLocation(e.target.value)} className="mt-1 w-full border rounded-xl px-3 py-2" placeholder={t.location} />
               </div>
 
               {/* Crop */}
               <div>
                 <label className="block text-sm font-medium">{t.crop}</label>
-                <div className="flex gap-2 mt-1">
-                  <select value={crop} onChange={e=>setCrop(e.target.value)} className="flex-1 border rounded-xl px-3 py-2">
-                    {crops[language].map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                  <button type="button" onClick={()=>startVoiceInput(setCrop)} className="px-3 py-2 border rounded-xl">🎤</button>
-                </div>
+                <select value={crop} onChange={e=>setCrop(e.target.value)} className="mt-1 w-full border rounded-xl px-3 py-2">
+                  {crops[language].map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
               </div>
 
               {/* Market */}
               <div>
                 <label className="block text-sm font-medium">{t.market}</label>
-                <div className="flex gap-2 mt-1">
-                  <select value={market} onChange={e=>setMarket(e.target.value)} className="flex-1 border rounded-xl px-3 py-2">
-                    {marketAreas[language].map(m => <option key={m} value={m}>{m}</option>)}
-                  </select>
-                  <button type="button" onClick={()=>startVoiceInput(setMarket)} className="px-3 py-2 border rounded-xl">🎤</button>
-                </div>
+                <select value={market} onChange={e=>setMarket(e.target.value)} className="mt-1 w-full border rounded-xl px-3 py-2">
+                  {marketAreas[language].map(m => <option key={m} value={m}>{m}</option>)}
+                </select>
               </div>
 
               {/* Weather & Market Price */}
               <div className="flex items-center justify-between border-t pt-3">
-                <div className="flex items-center gap-3">
-                  <WeatherIcon condition={weather.condition} />
-                  <div>
-                    <div className="text-sm">{weather.condition}</div>
-                    <div className="text-xs text-gray-500">{weather.temp}°C</div>
-                  </div>
+                <div>
+                  <div className="text-sm">{weather.condition}</div>
+                  <div className="text-xs text-gray-500">{weather.temp}°C</div>
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-gray-500">{t.marketPrice}</div>
@@ -236,17 +252,25 @@ export default function SmartCropWebsite(){
                 </div>
               </div>
 
+              {/* Infection Upload */}
+              <div>
+                <label className="block text-sm font-medium">{t.infection}</label>
+                <input type="file" accept="image/*" onChange={handleImageUpload} className="mt-1 w-full border rounded-xl px-3 py-2" />
+                {cropImage && (
+                  <div className="mt-2">
+                    <img src={cropImage} alt="Crop" className="w-40 h-40 object-cover rounded-xl border" />
+                    <p className="mt-2 text-sm font-medium">{infectionResult}</p>
+                  </div>
+                )}
+              </div>
+
               <button type="submit" className="mt-4 w-full md:w-auto rounded-xl border py-2 px-6 font-medium bg-green-600 text-white">{t.getAdvisory}</button>
             </form>
           </div>
 
+          {/* RIGHT PANEL */}
           <div className="flex-1">
-            <div className="text-sm font-semibold flex items-center justify-between">
-              {t.detailedAdvisory}
-              {advisory.length > 0 && (
-                <button onClick={speakAdvisory} className="ml-2 text-xs px-2 py-1 border rounded-md bg-gray-100">🔊</button>
-              )}
-            </div>
+            <div className="text-sm font-semibold">{t.detailedAdvisory}</div>
             <ul className="mt-2 space-y-2 text-sm max-h-80 overflow-auto">
               {advisory.length === 0 && <li className="text-gray-500">{t.noAdvisory}</li>}
               {advisory.map((a,i)=> <li key={i} className="border rounded-lg p-2">{a}</li>)}
@@ -256,37 +280,4 @@ export default function SmartCropWebsite(){
       </div>
     </div>
   );
-}
-
-// Weather Icon Component
-function WeatherIcon({ condition }){
-  switch(condition){
-    case 'Rain': return (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 12a5 5 0 015-5h1"/>
-        <path d="M20 16c0-2.76-2.24-5-5-5H9"/>
-        <line x1="8" y1="19" x2="8" y2="21"/>
-        <line x1="12" y1="19" x2="12" y2="21"/>
-        <line x1="16" y1="19" x2="16" y2="21"/>
-      </svg>
-    );
-    case 'Sunny': return (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#facc15" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-    );
-    default: return (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="5"/>
-      </svg>
-    );
-  }
 }
