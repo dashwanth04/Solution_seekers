@@ -133,7 +133,6 @@ function generateAdvisory({ soilType, crop, market, infectionResult, weather }, 
   if (market) adv.push(`${t.market}: ${market}`);
   if (infectionResult) adv.push(`🩺 ${infectionResult}`);
   if (weather) adv.push(`${t.rainfall}: ${weather.rainfall} mm`);
-  adv.push(t.tollFree);
 
   if (adv.length === 0) adv.push(t.noAdvisory);
   return adv;
@@ -276,6 +275,11 @@ export default function SmartCropWebsite(){
 
               <button type="submit" className="mt-4 w-full md:w-auto rounded-xl border py-2 px-6 font-medium bg-green-600 text-white">{t.getAdvisory}</button>
             </form>
+
+            {/* Toll-Free Helpline (separate section) */}
+            <div className="mt-6 p-3 bg-yellow-100 rounded-xl text-sm font-medium text-center">
+              {t.tollFree}
+            </div>
           </div>
 
           {/* RIGHT PANEL */}
